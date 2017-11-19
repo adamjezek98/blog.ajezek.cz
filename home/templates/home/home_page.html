@@ -14,19 +14,31 @@
 
     <div class="intro">{{ page.intro|richtext }}</div>
 
-    {% for post in blogpages %}
-        {% with post=post.specific %}
-            <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+    <div class="blog-posts-list">
+        {% for post in blogpages %}
+            <div class="blog-posts-list-item">
+                {% with post=post.specific %}
+                    <div class="vertical-align-center-outer">
+                        <div class="vertical-align-center-middle">
+                            <div class="vertical-align-center-inner">
 
-            {% with post.main_image as main_image %}
-                {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
-            {% endwith %}
+                                {% with post.main_image as main_image %}
+                                    {% if main_image %}
+                                        {% image main_image original width="" height="" class="post-thumbnail" %}{% endif %}
+                                {% endwith %}
 
-            <p>{{ post.intro }}</p>
-            {% include_block page.body %}
-        {% endwith %}
-    {% empty %}
-        No pages found with that tag.
-    {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+                        <p>{{ post.intro }}</p>
+                    </div>
+                {% endwith %}
+            </div>
+        {% empty %}
+            No pages found.
 
+        {% endfor %}
+    </div>
 {% endblock %}
