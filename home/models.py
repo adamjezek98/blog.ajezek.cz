@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.db import models
+from django.template.defaultfilters import slugify
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page, Orderable
@@ -16,13 +17,6 @@ from wagtail.wagtailsearch import index
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
-
-
-
-
-
-
-
 
 
 class HomePage(Page):
@@ -49,14 +43,15 @@ class HomePage(Page):
             return context
 
 
-
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('BlogPage', related_name='tagged_items')
+
 
 class BlogPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
-    body =  body = StreamField([
+
+    body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
@@ -85,6 +80,12 @@ class BlogPage(Page):
             return gallery_item.image
         else:
             return None
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            # Only set the slug when the object is created.
+            self.slug = slugify(str(self.date) + "-" + self.title)
+        super(BlogPage, self).save(*args, **kwargs)
 
 
 class BlogPageGalleryImage(Orderable):
