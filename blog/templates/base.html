@@ -29,6 +29,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
 
+
+
     {# Fonts #}
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
@@ -56,6 +58,13 @@
 </div>
 {# Global javascript #}
 <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script>
+    $(".blog-posts-list-item").click(function() {
+  window.location = $(this).find("a").attr("href");
+  return false;
+});
+</script>
 
 {% block extra_js %}
     {# Override this in templates to add extra javascript #}

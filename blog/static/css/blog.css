@@ -1,10 +1,15 @@
 :root {
     /*variables
      */
-    --main-bg-color: #959595;
+    --main-bg-color: #ebebeb;
+    --main-text-color: #535353;
+
+    --list-item-bg-color: #fbfbfb;
+
     --sidebar-bg-color: #5d41ff;
+
     --header-bg-color: black;
-    --header-text-color: var(--main-bg-color);
+    --header-text-color: #959595;
 }
 
 /*global
@@ -19,6 +24,7 @@ body {
     background-color: var(--main-bg-color);
     height: 100%;
     font-family: 'Roboto', sans-serif;
+    color: var(--main-text-color);
 }
 
 .main-header {
@@ -93,13 +99,31 @@ body {
 .blog-posts-list-item {
     width: 500px;
     margin: 20px;
-    border: 1px solid;
+    /*border: 1px solid;*/
+    border-radius: 10px;
     text-align: center;
+    cursor: pointer;
+    background-color: var(--list-item-bg-color);
 }
 
 .blog-posts-list-item img {
     max-width: 450px;
     max-height: 450px;
+}
+
+.blog-posts-list-item a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.blog-posts-list-item h2 {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 5px;
+}
+
+.blog-posts-list-item p {
+    margin: 10px;
 }
 
 .vertical-align-center-outer {
