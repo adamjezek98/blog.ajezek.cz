@@ -1,4 +1,4 @@
-{% load static wagtailuserbar %}
+{% load static wagtailuserbar wagtailcore_tags %}
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -30,7 +30,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
 
 
-
     {# Fonts #}
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
@@ -42,13 +41,21 @@
 <body class="{% block body_class %}{% endblock %}">
 {% wagtailuserbar %}
 <div class="main-header">
-   <span class="fa fa-bars" id="menu-button" ></span> <h1>Blog | Adam Ježek</h1>
+    <span class="fa fa-bars visible-only-on-mobile" id="menu-button"></span>
+    <h1><a href="/">Blog</a> | <a href="https://ajezek.cz">Adam Ježek</a></h1>
 </div>
 <div class="page-content">
 
 
-    <div class="left-sidebar">
-        <p>Test</p>
+    <div class="left-sidebar" id="left-sidebar">
+
+        <h3 class="tag-heading">Tags</h3>
+        <div class="tag-list">
+            {% for tag in page.get_posts_tags %}
+                <div class="tag-list-item"><i class="fa fa-tags" aria-hidden="true" style="margin-right:5px;"></i><a
+                        href="/?tag={{ tag.0 }}">{{ tag.0 }} ({{ tag.1 }})</a></div>
+            {% endfor %}
+        </div>
     </div>
     <div class="right-content">
 
@@ -60,10 +67,36 @@
 <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 <script>
-    $(".blog-posts-list-item").click(function() {
-  window.location = $(this).find("a").attr("href");
-  return false;
-});
+    $(".blog-posts-list-item").click(function () {
+        window.location = $(this).find("a").attr("href");
+        return false;
+    });
+    $(".tag-list-item").click(function () {
+        window.location = $(this).find("a").attr("href");
+        return false;
+    });
+    $("#menu-button").click(function () {
+        var sidebar = $("#left-sidebar");
+
+        if (sidebar.css("visibility") == "hidden") {
+            sidebar.slideUp(0);
+            sidebar.css("visibility", "visible");
+            sidebar.slideDown(1000);
+        } else {
+            sidebar.slideToggle(1000);
+
+        }
+
+    });
+    $( window ).resize(function() {
+       //if($( window ).width() >= 900){
+       if($("#menu-button").css("visibility") == "hidden"){
+           $("#left-sidebar").slideDown(0);
+           $("#left-sidebar").css("visibility", "visible");
+       } else {
+           $("#left-sidebar").css("visibility", "hidden");
+       }
+    });
 </script>
 
 {% block extra_js %}

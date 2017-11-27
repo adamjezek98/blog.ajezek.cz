@@ -5,33 +5,35 @@
 {% block body_class %}template-blogpage{% endblock %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.date }}</p>
+    <div class="blog-post">
+        <h1 class="blog-post-heading">{{ page.title }}</h1>
+        <article>
+            <p class="blog-post-date"><i class="fa fa-calendar-o" aria-hidden="true" style="margin-right:5px;"></i>{{ page.date }}
+            </p>
 
-    <div class="intro">{{ page.intro }}</div>
+            <div class="blog-post-intro">{{ page.intro }}</div>
 
-   {% include_block page.body %}
-    <div>
-        {% for item in page.gallery_images.all %}
-            <div style="float: left; margin: 10px">
-                {% image item.image fill-320x240 %}
-                <p>{{ item.caption }}</p>
-            </div>
-        {% endfor %}
+            {% include_block page.body %}
+
+            <hr/>
+            <div class="cleaner"></div>
+            {% if page.tags.all.count %}
+                <h3 class="tag-heading" style="text-align: left">Tags</h3>
+                <div class="tag-list" style="justify-content: left">
+
+
+                    {% for tag in page.tags.all %}
+                        <div class="tag-list-item" style="max-width: none">
+                            <i class="fa fa-tags" aria-hidden="true" style="margin-right:5px;"></i><a
+                                href="/?tag={{ tag }}">{{ tag }}</a>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <br/>
+
+            <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+        </article>
     </div>
-    <br/>
-    {% if page.tags.all.count %}
-        <div class="tags">
-            <h3>Tags</h3>
-            {% for tag in page.tags.all %}
-                <a href="{% slugurl 'tags' %}?tag={{ tag }}">
-                    <button type="button">{{ tag }}</button>
-                </a>
-            {% endfor %}
-        </div>
-    {% endif %}
-    <br/>
-
-    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
-
 {% endblock %}
