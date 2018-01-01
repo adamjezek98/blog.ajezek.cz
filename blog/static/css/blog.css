@@ -184,6 +184,13 @@ blog page
 
 .blog-post {
     padding: 10px;
+    max-width:1100px;
+    display: inline-block;
+    text-align: initial;
+    width: 80%;
+}
+.blog-post-wrapper {
+    text-align: center;
 }
 
 .blog-post-heading {

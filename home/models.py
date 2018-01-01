@@ -1,11 +1,18 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.db import models
+from django import forms
 from django.template.defaultfilters import slugify
+from django.utils.safestring import mark_safe
+from django.utils import six
 
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.blocks import *
 from wagtail.wagtailcore.models import Page, Orderable
-from wagtail.wagtailcore.fields import StreamField, RichTextField
+from wagtail.wagtailcore.fields import * # StreamField, RichTextField
+
+
+
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 
@@ -42,7 +49,6 @@ class HomePage(Page):
         tagsdict = {}
         sortedtags = sorted(alltags.items(), key=operator.itemgetter(1))
         sortedtags.reverse()
-        print(sortedtags)
         return sortedtags
         for sortedtag in sortedtags:
             tagsdict[sortedtag[0]] = tagsdict[sortedtag[1]]
@@ -67,6 +73,38 @@ class HomePage(Page):
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('BlogPage', related_name='tagged_items')
 
+class RawCodeBlock(FieldBlock):
+    def __init__(self, required=True, help_text=None, max_length=None, min_length=None, **kwargs):
+        self.field = forms.CharField(
+            required=required, help_text=help_text, max_length=max_length, min_length=min_length,
+            widget=forms.Textarea)
+        super(RawCodeBlock, self).__init__(**kwargs)
+
+    def get_default(self):
+        return mark_safe(self.meta.default or '')
+
+    def to_python(self, value):
+        return mark_safe(value)
+
+    def get_prep_value(self, value):
+        # explicitly convert to a plain string, just in case we're using some serialisation method
+        # that doesn't cope with SafeText values correctly
+        return six.text_type(value)
+   
+    def value_for_form(self, value):
+        # need to explicitly mark as unsafe, or it'll output unescaped HTML in the textarea
+        if value.startswith("<pre><code>"):
+            value = value[11:]
+        if value.endswith("</pre></code>"):
+            value = value[:-13]
+        return six.text_type(value)
+
+
+    def value_from_form(self, value):
+        return mark_safe("<pre><code>"+value+"</code></pre>")
+
+    class Meta:
+        icon = 'code'
 
 class BlogPage(Page):
     date = models.DateField("Post date")
@@ -76,6 +114,9 @@ class BlogPage(Page):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
+        ('rawhtml', RawHTMLBlock()),
+        ('quote',BlockQuoteBlock()),
+        ('code', RawCodeBlock())
     ])
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 

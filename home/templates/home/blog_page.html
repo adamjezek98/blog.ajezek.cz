@@ -5,10 +5,21 @@
 {% block body_class %}template-blogpage{% endblock %}
 
 {% block content %}
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=358189847978348";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+<div class="blog-post-wrapper">
     <div class="blog-post">
         <h1 class="blog-post-heading">{{ page.title }}</h1>
         <article>
-            <p class="blog-post-date"><i class="fa fa-calendar-o" aria-hidden="true" style="margin-right:5px;"></i>{{ page.date }}
+            <p class="blog-post-date"><i class="fa fa-calendar-o" aria-hidden="true"
+                                         style="margin-right:5px;"></i>{{ page.date }}
             </p>
 
             <div class="blog-post-intro">{{ page.intro }}</div>
@@ -18,7 +29,7 @@
             <hr/>
             <div class="cleaner"></div>
             {% if page.tags.all.count %}
-                <h3 class="tag-heading" style="text-align: left">Tags</h3>
+                <h3 class="tag-heading" style="text-align: left">Tagy</h3>
                 <div class="tag-list" style="justify-content: left">
 
 
@@ -33,7 +44,12 @@
             {% endif %}
             <br/>
 
-            <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+
         </article>
+        <div class="comments">
+            <div class="fb-comments" data-href="blog.ajezek.cz{{ request.path }}" data-num-posts="5" data-width="100%"
+                 data-colorscheme="dark" ></div>
+        </div>
     </div>
+</div>
 {% endblock %}

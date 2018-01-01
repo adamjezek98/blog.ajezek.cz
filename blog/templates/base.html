@@ -10,6 +10,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="fb:app_id" content="358189847978348"/>
     <title>
         {% block title %}
             {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
@@ -26,8 +27,6 @@
     {# Global stylesheets #}
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
 
 
     {# Fonts #}
@@ -49,7 +48,7 @@
 
     <div class="left-sidebar" id="left-sidebar">
 
-        <h3 class="tag-heading">Tags</h3>
+        <h3 class="tag-heading">Tagy</h3>
         <div class="tag-list">
             {% for tag in page.get_posts_tags %}
                 <div class="tag-list-item"><i class="fa fa-tags" aria-hidden="true" style="margin-right:5px;"></i><a
@@ -88,16 +87,23 @@
         }
 
     });
-    $( window ).resize(function() {
-       //if($( window ).width() >= 900){
-       if($("#menu-button").css("visibility") == "hidden"){
-           $("#left-sidebar").slideDown(0);
-           $("#left-sidebar").css("visibility", "visible");
-       } else {
-           $("#left-sidebar").css("visibility", "hidden");
-       }
+    $(window).resize(function () {
+        //if($( window ).width() >= 900){
+        if ($("#menu-button").css("visibility") == "hidden") {
+            $("#left-sidebar").slideDown(0);
+            $("#left-sidebar").css("visibility", "visible");
+        } else {
+            $("#left-sidebar").css("visibility", "hidden");
+        }
     });
 </script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/highlighter/default.css' %}">
+<script src="{% static 'js/highlight.pack.js' %}"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
 {% block extra_js %}
     {# Override this in templates to add extra javascript #}
