@@ -275,3 +275,7 @@ left sidebar
     margin: 10px;
     font-size: 1.2em;
 }
+
+.fa {
+    display: inline;
+}
