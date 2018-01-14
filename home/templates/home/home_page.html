@@ -7,7 +7,7 @@
 
 
     {% if request.GET.tag|length %}
-        <h4>Showing pages tagged "{{ request.GET.tag }}"</h4>
+        <h2 class="tag-heading">Příspěvky s tagem "<i>{{ request.GET.tag }}</i>"</h2>
     {% endif %}
 
 

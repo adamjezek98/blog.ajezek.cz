@@ -297,3 +297,10 @@ hr {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.tag-heading {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 5px;
+    text-align: center;
+}
