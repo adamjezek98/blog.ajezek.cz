@@ -63,13 +63,16 @@
 
 
     <div class="left-sidebar" id="left-sidebar">
-
+        <ul>
+            <li class="sidebar-item"><a href="https://www.ajezek.cz/" target="_blank">Kdo jsem?</a></li>
+        </ul>
+        <hr/>
         <h3 class="tag-heading">Tagy</h3>
         <div class="tag-list">
             {% for tag in page.get_posts_tags %}
                 <div class="tag-list-item"><i class="fa fa-tags" aria-hidden="true" style="margin-right:5px;"></i><a
                         href="/?tag={{ tag.0 }}">{{ tag.0 }} ({{ tag.1 }})</a></div>
-            {% endfor %}
+            {% endfor %}  
         </div>
     </div>
     <div class="right-content">

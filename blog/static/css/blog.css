@@ -276,6 +276,24 @@ left sidebar
     font-size: 1.2em;
 }
 
+.sidebar-item {
+    text-align: center;
+    margin: 10px;
+    font-size: 1.3em;
+}
+
+.sidebar-item a {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    color: inherit;
+    text-decoration: inherit;
+}
+
 .fa {
     display: inline;
+}
+
+hr {
+    margin-left: 5px;
+    margin-right: 5px;
 }
