@@ -31,6 +31,13 @@ body {
     color: var(--main-text-color);
 }
 
+i {
+    font-style: italic;
+}
+
+b {
+    font-weight: bold;
+}
 .main-header {
     height: 50px;
     background-color: var(--header-bg-color);
